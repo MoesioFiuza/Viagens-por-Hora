@@ -8,14 +8,14 @@ if df_viagens['Hora_inicio'].dtype == object:
     try:
         df_viagens['Hora_inicio'] = pd.to_datetime(df_viagens['Hora_inicio'], format='%H:%M:%S').dt.time
     except ValueError:
-        raise ValueError("'Hora_inicio' must be in 'HH:MM:SS' format if it's a string")
+        raise ValueError("'Hora_inicio' deve ser 'HH:MM:SS' ")
 
 if pd.api.types.is_datetime64_any_dtype(df_viagens['Hora_inicio']):
     df_viagens['Hora_inicio_time'] = df_viagens['Hora_inicio'].dt.time
 elif isinstance(df_viagens['Hora_inicio'][0], datetime.time):
     df_viagens['Hora_inicio_time'] = df_viagens['Hora_inicio']
 else:
-    raise ValueError("'Hora_inicio' must be either datetime or time type")
+    raise ValueError("'Hora_inicio' deve ou datetime ou type time")
 
 df_viagens['Hora_inicio_datetime'] = [
     datetime.datetime.combine(datetime.date.today(), time) for time in df_viagens['Hora_inicio_time']
